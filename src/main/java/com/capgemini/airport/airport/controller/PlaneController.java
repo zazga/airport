@@ -24,14 +24,13 @@ public class PlaneController {
 
     @RequestMapping(value = "create", method = RequestMethod.POST)
     public Plane createPlane(@RequestBody Plane plane) throws InvalidModelException {
-//        plane.validate();
-        this.planeRepository.save(plane);
-        return plane;
-//        try {
-//            this.planeRepository.save(plane);
-//            return plane;
-//        } catch(DataIntegrityViolationException e){
-//            throw new InvalidModelException("This address already exists!");
-//        }
+        plane.validate();
+
+        try {
+            this.planeRepository.save(plane);
+            return plane;
+        } catch(DataIntegrityViolationException e){
+            throw new InvalidModelException("This plane already exists!");
+        }
     }
 }
