@@ -45,7 +45,7 @@ public class Airport extends Model{
         this.name = name;
     }
 
-    public double getLongtitude() {
+    public double getLongitude() {
         return longitude;
     }
 
