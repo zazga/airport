@@ -30,17 +30,18 @@ public class AirportController {
         }
     }
 
-    @RequestMapping(value = "edit", method = RequestMethod.POST)
-    public Airport updateAirport(@RequestBody Airport airport) throws InvalidModelException {
-        airport.validate();
-
-        try {
-            this.airportRepository.save(airport);
-            return airport;
-        } catch(DataIntegrityViolationException e){
-            throw new InvalidModelException("This airport already exists!");
-        }
-}
+    // MAKE EDITING WORK AGAIN
+//    @RequestMapping(value = "edit", method = RequestMethod.POST)
+//    public Airport updateAirport(@RequestBody Airport airport) throws InvalidModelException {
+//        airport.validate();
+//
+//        try {
+//            this.airportRepository.save(airport);
+//            return airport;
+//        } catch(DataIntegrityViolationException e){
+//            throw new InvalidModelException("This airport already exists!");
+//        }
+//}
 
     @RequestMapping(value = "delete/{id}", method = RequestMethod.DELETE)
     public void deleteAirport(@PathVariable long id) {
