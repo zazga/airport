@@ -20,13 +20,17 @@ public class Airport extends Model{
     @Range(min = -9223372036854775808l,message="fill in a latitude, as a double")
     private double latitude;
 
+    @Range(min = 0, max = 5 ,message="amount of runways, as an int")
+    private int runways;
+
     public Airport() {
     }
 
-    public Airport(String name, double longitude, double latitude) {
+    public Airport(String name, double longitude, double latitude,int runways) {
         this.name = name;
         this.longitude = longitude;
         this.latitude = latitude;
+        this.runways = runways;
     }
 
     public long getId() {
@@ -59,5 +63,13 @@ public class Airport extends Model{
 
     public void setLatitude(double latitude) {
         this.latitude = latitude;
+    }
+
+    public int getRunways() {
+        return runways;
+    }
+
+    public void setRunways(int runways) {
+        this.runways = runways;
     }
 }
