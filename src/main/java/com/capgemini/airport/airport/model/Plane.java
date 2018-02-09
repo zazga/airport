@@ -1,8 +1,6 @@
 package com.capgemini.airport.airport.model;
 
-
 import org.hibernate.validator.constraints.Range;
-
 import javax.persistence.*;
 import javax.validation.constraints.*;
 
@@ -13,17 +11,22 @@ public class Plane extends Model{
     private long id;
 
     @Range(min=0,max = 999)
-    private int gasMeter;
+    private int fuel;
 
     @Pattern(regexp="[a-zA-Z ]*",message="An airport name can consist of letters found in the latin alphabet")
     private String currentAirport;
 
+    @ManyToOne()
+    @JoinColumn(name="type_id", nullable = true)
+    private Type type;
+
     public Plane() {
     }
 
-    public Plane(int gasMeter, String currentAirport) {
-        this.gasMeter = gasMeter;
+    public Plane(int fuel, String currentAirport, Type type) {
+        this.fuel = fuel;
         this.currentAirport = currentAirport;
+        this.type = type;
     }
 
     public long getId() {
@@ -34,12 +37,20 @@ public class Plane extends Model{
         this.id = id;
     }
 
-    public int getGasMeter() {
-        return gasMeter;
+    public int getFuel() {
+        return fuel;
     }
 
-    public void setGasMeter(int gasMeter) {
-        this.gasMeter = gasMeter;
+    public void setFuel(int fuel) {
+        this.fuel = fuel;
+    }
+
+    public Type getType() {
+        return type;
+    }
+
+    public void setType(Type type) {
+        this.type = type;
     }
 
     public String getCurrentAirport() {
