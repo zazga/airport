@@ -4,6 +4,7 @@ var selectedId;
 var edit = false;
 
 $(document).ready(function () {
+
     console.log("Document ready")
 
 //    // Load DataTable with data format.
@@ -14,7 +15,8 @@ $(document).ready(function () {
         columns: [
            { "data": "name" },
            { "data": "longitude" },
-           { "data": "latitude" }
+           { "data": "latitude" },
+           { "data": "runways" }
         ]
     });
 
@@ -33,17 +35,17 @@ $(document).ready(function () {
     });
     $('#remove').on('click', function(event) {
         var airport = tableHelper.getSelectedRowData();
-        bootboxConfirm('Are you sure you want to delete this room?', function(result) {
+        bootboxConfirm('Are you sure you want to delete this airport?', function(result) {
         if (result == true){
-                        removeAirport(airport, function() {
-                            toastr.success('Removed "' + airport.name + '" from Airports!');
-                            updateTable();
-                        },
-                        handleError);
-                    }
-                    else{
-                        $('#Modal').modal('toggle');
-                    }
+            removeAirport(airport, function() {
+                toastr.success('Removed "' + airport.name + '" from Airports!');
+                updateTable();
+            },
+            handleError);
+        }
+        else{
+            $('#Modal').modal('toggle');
+        }
 
 //
 //
@@ -96,11 +98,11 @@ function handleError(error) {
 //
 function createairport(data, successCallback, errorCallback) {
     console.log("Creating airport..")
-
     var airport = {
         name: data.name,
         longitude: data.longitude,
         latitude: data.latitude,
+        runways: data.runways
     };
 
     ajaxJsonCall('POST', '/api/airports/create', airport, successCallback, errorCallback )
@@ -111,23 +113,13 @@ function editAirport(airport, successCallback, errorCallback) {
     ajaxJsonCall('POST', '/api/airports/edit', airport, successCallback, errorCallback);
     console.log(airport.id);
 }
-//
-//function removeairport(airport, successCallback, errorCallback) {
-//    console.log("Removing airport..")
-//    ajaxJsonCall('DELETE', '/api/airports/delete/' + airport.id, null, successCallback, errorCallback);
-//}
-//
+
 function getFormData() {
     return {
         name : $("#name").val(),
         longitude : $("#longitude").val(),
-        latitude : $("#latitude").val()
-//        telephoneNumber : $("#telephoneNumber").val(),
-//        street : $("#street").val(),
-//        houseNumber : $("#houseNumber").val(),
-//        postalCode : $("#postalCode").val(),
-//        city : $("#city").val(),
-//        country : $("#country").val()
+        latitude : $("#latitude").val(),
+        runways : $("#runways").val()
     };
 }
 
@@ -139,8 +131,9 @@ function setFormData(airport) {
     $('#name').val(airport.name);
     $('#longitude').val(airport.longitude);
     $('#latitude').val(airport.latitude);
+    $('#runways').val(airport.runways);
 }
-//
+
 function updateTable() {
     console.log("Updating table..");
 
